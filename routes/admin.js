@@ -6,7 +6,7 @@ const saltRounds = 5;
  const { z } = require("zod")
 
  const jwt = require("jsonwebtoken")
- const JWT_SECRET = "hello";
+ const {JWT_ADMIN_SECRET} = require("../config");
  
 
 const adminRouter= Router();
@@ -65,7 +65,7 @@ adminRouter.post("/signin" , async(req ,res)=>{
     if(passwordMatch){
           const token = jwt.sign({
             id: response._id.toString() },
-            JWT_SECRET
+            JWT_ADMIN_SECRET
         );
         res.json({
             token: token
