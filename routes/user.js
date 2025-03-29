@@ -7,10 +7,10 @@ const saltRounds = 5;
 const { z } = require("zod");
 
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "hello";
+const {JWT_SECRET} = require("../config");
 
 const { userModel } = require("../database/db");
-
+const {userMiddleware} = require("../middleware/userMiddleware")
 
 
 userRouter.post("/signup" , async(req, res)=>{
