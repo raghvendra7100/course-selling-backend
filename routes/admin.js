@@ -11,7 +11,7 @@ const saltRounds = 5;
 
 const adminRouter= Router();
 const { adminModel } = require("../database/db");
-const user = require("./user");
+
 adminRouter.post("/signup" , async(req ,res)=>{
     const requirebody = z.object({
         email: z.string().min(3).max(100).email(),
@@ -29,10 +29,7 @@ adminRouter.post("/signup" , async(req ,res)=>{
         return
     }
 
-     const email =req.body.email;
-     const password = req.body.password;
-     const firstname = req.body.firstname ;
-     const lastname = req.body.lastname
+     const{email , password , firstname , lastname} = req.body;
 
     const hashedPassword = await bcrypt.hash(password ,saltRounds)
 try{

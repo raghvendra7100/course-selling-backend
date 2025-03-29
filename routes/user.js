@@ -32,9 +32,7 @@ userRouter.post("/signup" , async(req, res)=>{
     return
    }
 
-    const username = req.body.username;
-    const email = req.body.email;
-    const password = req.body.password;
+   const {username , email , password} = req.body;
     
     const hashedPassword =await bcrypt.hash(password, saltRounds)
  
@@ -54,8 +52,7 @@ try{
 
 
 userRouter.post("/signin" , async(req, res)=>{
-    const email = req.body.email;
-    const password = req.body.password;
+    const { email , password }= req.body ;
 
     const response = await userModel.findOne({
         email
