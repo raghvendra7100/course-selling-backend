@@ -9,7 +9,7 @@ const { z } = require("zod");
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET} = require("../config");
 
-const { userModel } = require("../database/db");
+const { userModel, purchaseModel } = require("../database/db");
 const {userMiddleware} = require("../middleware/userMiddleware")
 
 
@@ -82,9 +82,14 @@ userRouter.post("/signin" , async(req, res)=>{
 
 })
 
-userRouter.post("/buy" , (req, res)=>{
+userRouter.post("/purchase" ,userMiddleware ,  async(req, res)=>{
+   const userId= req.userId
+    const purchases = await purchaseModel.find({
+        userId
+    })
+
     res.json({
-        message: "working route"
+        purchases
     })
 })
 
