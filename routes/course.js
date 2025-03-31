@@ -1,11 +1,12 @@
 const { Router } = require("express");
-const { purcahseModel } = require("../database/db");
+const { purchaseModel } = require("../database/db");
+const {courseModel} = require("../database/db");
 const {userMiddleware} = require("../middleware/userMiddleware")
 const courseRouter = Router();
 
-courseRouter.post("/purchases" , async(req, res)=>{
+courseRouter.post("/purchases" , userMiddleware , async(req, res)=>{
     const {userId , courseId} =req.body;
-    const alreadyBought = await purcahseModel.findOne({
+    const alreadyBought = await purchaseModel.findOne({
         userId,
         courseId
     })
