@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 console.log('connected to ')
-mongoose.connect("mongodb+srv://admin:uvxW9TUWxQJ5VQWB@cluster0.eo1ds.mongodb.net/course-selling-app")
+mongoose.connect(process.env.Mongo_URL)
 
 
 const Schema = mongoose.Schema;
