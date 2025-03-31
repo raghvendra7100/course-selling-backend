@@ -1,5 +1,5 @@
-JWT_SECRET = "hello";
-JWT_ADMIN_SECRET = "hello12345";
+JWT_SECRET = process.env.JWT_SECRET
+JWT_ADMIN_SECRET = process.env.JWT_ADMIN_SECRET
 
 module.exports= {
     JWT_SECRET,
