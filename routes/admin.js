@@ -11,6 +11,7 @@ const saltRounds = 5;
 
 const adminRouter= Router();
 const { adminModel } = require("../database/db");
+const {adminMiddleware} = require("../middleware/adminMiddleware");
 
 adminRouter.post("/signup" , async(req ,res)=>{
     const requirebody = z.object({
@@ -78,14 +79,51 @@ adminRouter.post("/signin" , async(req ,res)=>{
     
 
 })
-adminRouter.post("/course" , (req ,res)=>{
+adminRouter.post("/course" , adminMiddleware , async(req ,res)=>{
+    const adminId = req.adminId;
+    const {title , description , price , imageURL }= req.body;
 
+    await courseModel.create({
+        title, 
+        description , 
+        imageURL , 
+        price ,
+        creatorId : adminId
+    })
+    res.json({
+        message: "new course is successfully created",
+        courseId: course._id
+    })
 })
-adminRouter.put("/course" , (req ,res)=>{
+adminRouter.put("/course" , async(req ,res)=>{
+    const adminId = req.adminId;
+    const {title   ,description ,   imageURL , price , courseId} = req.body;
 
+    await coureseModel.updateOne({
+        creatorId,
+        _id: courseId
+    } , {
+        title, 
+        description , 
+        price,
+        imageURL,
+        creatorId : adminId
+    })
+
+    res.json({
+        message: "Course update successful",
+        courseId: courseId
+    })
 })
-adminRouter.get("/course/bulk" , (req ,res)=>{
+adminRouter.get("/course/bulk" , async(req ,res)=>{
+    const adminId  = req.adminId;
+    const courses = await courseModel.find({
+        creatorId: adminId
+    })
 
+    res.json({
+        courses
+    })
 })
 
 module.exports = { 
